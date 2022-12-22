@@ -18,23 +18,6 @@ users = sqlalchemy.Table(
     sqlalchemy.Column("mdp", sqlalchemy.String),
 )
 
-test = sqlalchemy.Table(
-    "test",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.INTEGER , primary_key=True),
-    sqlalchemy.Column("users", sqlalchemy.String),
-    sqlalchemy.Column("mdp", sqlalchemy.String),
-)
-
-
-
-users = sqlalchemy.Table(
-    "test",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.INTEGER , primary_key=True),
-    sqlalchemy.Column("users", sqlalchemy.String),
-    sqlalchemy.Column("mdp", sqlalchemy.String),
-)
 
 
 engine = sqlalchemy.create_engine(
