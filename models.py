@@ -1,12 +1,10 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+import sqlalchemy
+import database
 
-from database import Base
-
-
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-
+usersbdd = sqlalchemy.Table(
+    "users",
+    database.metadata,
+    sqlalchemy.Column("id", sqlalchemy.INTEGER , primary_key=True),
+    sqlalchemy.Column("users", sqlalchemy.String),
+    sqlalchemy.Column("mdp", sqlalchemy.String),
+)

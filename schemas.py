@@ -1,18 +1,21 @@
-from typing import List, Union
-
 from pydantic import BaseModel
 
 
-
-class UserBase(BaseModel):
+class _UserBase(BaseModel):
     email: str
+    pseudo :str
+    avatar: str
+    roles : str
+
+class UserCreate(_UserBase):
+    hashed_password: str
+    
+
+    class Config:
+        orm_mode = True
 
 
-class UserCreate(UserBase):
-    password: str
-
-
-class User(UserBase):
+class User(_UserBase):
     id: int
 
     class Config:
