@@ -9,8 +9,6 @@ from pydantic import BaseModel
 import pydantic as _pydantic
 import sqlalchemy.orm as _orm
 
-import database
-
 
 origins = [
     "http://localhost",
@@ -20,7 +18,6 @@ origins = [
 
 
 
-database.metadata.create_all(database.engine)
 
 
 app = FastAPI()
