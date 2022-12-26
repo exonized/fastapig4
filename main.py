@@ -9,7 +9,7 @@ from pydantic import BaseModel
 import pydantic as _pydantic
 import sqlalchemy.orm as _orm
 
-import models
+
 from database import metadata, engine
 
 
