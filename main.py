@@ -9,6 +9,7 @@ from pydantic import BaseModel
 import pydantic as _pydantic
 import sqlalchemy.orm as _orm
 
+import sqlalchemy
 from database import metadata, engine
 
 
@@ -18,6 +19,14 @@ origins = [
     "http://localhost:8000",
 ]
 
+
+usersbdd = sqlalchemy.Table(
+    "users",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.INTEGER , primary_key=True),
+    sqlalchemy.Column("users", sqlalchemy.String),
+    sqlalchemy.Column("mdp", sqlalchemy.String),
+)
 
 
 metadata.create_all(engine)
