@@ -1,6 +1,5 @@
 import sqlalchemy
-import database as _database
-from database import metadata
+
 
 Utilisateurs = sqlalchemy.Table(
     "users",
