@@ -1,9 +1,9 @@
 import sqlalchemy
+import database as _database
 from database import metadata
 
 
-
-class User(sqlalchemy.Table):
+class User(_database.Base):
     "users",
     metadata,
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, index=True)
