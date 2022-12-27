@@ -1,22 +1,17 @@
 from pydantic import BaseModel
 
 
-class _UserBase(BaseModel):
+class UserBase(BaseModel):
     email: str
-    pseudo :str
-    avatar: str
-    roles : str
-
-class UserCreate(_UserBase):
-    hashed_password: str
-    
-
-    class Config:
-        orm_mode = True
 
 
-class User(_UserBase):
+class UserCreate(UserBase):
+    password: str
+
+
+class User(UserBase):
     id: int
+    is_active: bool
 
     class Config:
         orm_mode = True
