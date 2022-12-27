@@ -4,7 +4,6 @@ from database import metadata
 
 Utilisateurs = sqlalchemy.Table(
     "users",
-    metadata,
     sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, index=True),
     sqlalchemy.Column(sqlalchemy.String, unique=True, index=True),
     sqlalchemy.Column(sqlalchemy.String, unique=True, index=True),
