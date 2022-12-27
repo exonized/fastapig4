@@ -86,7 +86,7 @@ import database
 #             status_code=401, detail="Problème lors de la supprésion"
 #         )
 
-# return schemas.User.from_orm(user)
+# return schemas.User.from_orm(user)  lqsdjfiqsfoidshfiosd
 
 
 def get_items(db:  _orm.Session, skip: int = 0, limit: int = 100):
