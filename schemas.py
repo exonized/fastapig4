@@ -1,7 +1,5 @@
-import datetime as _dt
-from typing import List, Union
+from typing import Union
 import pydantic as _pydantic
-from pydantic import EmailStr
 
 # Schéma de la class Item (Articles)
 
