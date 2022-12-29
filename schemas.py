@@ -80,15 +80,69 @@ class ServiceBase(_pydantic.BaseModel):
     image: str
 
 
-class ServiceCreate(ItemBase):
+class ServiceCreate(ServiceBase):
     pass
 
 
-class Service(ItemBase):
+class Service(ServiceBase):
     id: int
 
     class Config:
         orm_mode = True
 
 
-# Schéma de la class email (email)
+# Schéma de la class chatbox (chatbox)
+
+class ChatboxBase(_pydantic.BaseModel):
+    user_id: int
+    pseudo: str
+    message: str
+
+
+class ChatboxCreate(ChatboxBase):
+    pass
+
+
+class Chatbox(ChatboxBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# Schéma de la class facture (Facture)
+
+class FactureBase(_pydantic.BaseModel):
+    user_id: int
+    description: str
+    pdf: str
+
+
+class FactureCreate(FactureBase):
+    pass
+
+
+class Facture(FactureBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# Schéma de la class devis (Devis)
+
+class DevisBase(_pydantic.BaseModel):
+    user_id: int
+    description: str
+    pdf: str
+
+
+class DevisCreate(DevisBase):
+    pass
+
+
+class Devis(DevisBase):
+    id: int
+
+    class Config:
+        orm_mode = True

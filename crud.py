@@ -123,3 +123,39 @@ def create_services(services: schemas.ServiceCreate, db:  _orm.Session):
     db.commit()
     db.refresh(db_services)
     return db_services
+
+
+def create_chatbox(chatbox: schemas.ChatboxCreate, db: _orm.Session):
+    db_chatbox = models.Chatbox(**chatbox.dict())
+    db.add(db_chatbox)
+    db.commit()
+    db.refresh(db_chatbox)
+    return db_chatbox
+
+
+def read_chatbox(db:  _orm.Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Chatbox).offset(skip).limit(limit).all()
+
+
+def create_devis(devis: schemas.DevisCreate, db: _orm.Session):
+    db_devis = models.Devis(**devis.dict())
+    db.add(db_devis)
+    db.commit()
+    db.refresh(db_devis)
+    return db_devis
+
+
+def read_devis(db:  _orm.Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Devis).offset(skip).limit(limit).all()
+
+
+def create_facture(facture: schemas.FactureCreate, db: _orm.Session):
+    db_facture = models.Facture(**facture.dict())
+    db.add(db_facture)
+    db.commit()
+    db.refresh(db_facture)
+    return db_facture
+
+
+def read_facture(db:  _orm.Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Facture).offset(skip).limit(limit).all()
