@@ -89,9 +89,9 @@ async def delete_user(user: schemas.User = fastapi.Depends(crud.delete_current_u
 
 @app.post("/api/items/", tags=["items"], response_model=schemas.Item)
 def create_item_for_user(
-    item: schemas.ItemCreate, db: _orm.Session = fastapi.Depends(crud.get_db), user: schemas.User = fastapi.Depends(crud.delete_current_user)
+    item: schemas.ItemCreate, db: _orm.Session = fastapi.Depends(crud.get_db)
 ):
-    return crud.create_user_item(user, db=db, item=item)
+    return crud.create_user_item(db=db, item=item)
 
 
 @app.get("/api/items/get", tags=["items"], response_model=List[schemas.Item])
