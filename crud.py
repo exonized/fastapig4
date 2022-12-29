@@ -1,7 +1,7 @@
 import sqlalchemy.orm as _orm
 
 import passlib.hash as _hash
-
+import jwt as jwtt
 import fastapi
 import fastapi.security as _security
 
@@ -10,12 +10,49 @@ import schemas
 import database
 
 
+oauth2schema = _security.OAuth2PasswordBearer(tokenUrl="/api/token")
+JWT_SECRET = "myjwtsecret"
+
+
 def get_db():
     db = database.SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+
+async def get_current_user(
+    db: _orm.Session = fastapi.Depends(get_db),
+    token: str = fastapi.Depends(oauth2schema),
+):
+    try:
+        payload = jwtt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        user = db.query(models.User).get(payload["id"])
+    except:
+        raise fastapi.HTTPException(
+            status_code=401, detail="Mauvais email ou mot de passe"
+        )
+
+    return schemas.User.from_orm(user)
+
+
+async def delete_current_user(
+    db: _orm.Session = fastapi.Depends(get_db),
+    token: str = fastapi.Depends(oauth2schema),
+):
+    try:
+        payload = jwtt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        user = db.query(models.User).get(payload["id"])
+        db.delete(user)
+        db.commit()
+
+    except:
+        raise fastapi.HTTPException(
+            status_code=401, detail="Problème lors de la supprésion"
+        )
+
+    return schemas.User.from_orm(user)
 
 
 def get_items(db:  _orm.Session, skip: int = 0, limit: int = 100):

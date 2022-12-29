@@ -1,6 +1,7 @@
 from typing import List
 
 import fastapi
+from fastapi.middleware.cors import CORSMiddleware
 import fastapi.security as _security
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -19,6 +20,21 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -26,6 +42,18 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# Users
+
+@app.get("/api/users/me", tags=["users"], response_model=schemas.User)
+async def get_user(user: schemas.User = fastapi.Depends(crud.get_current_user)):
+    return user
+
+
+@app.delete("/api/user/me/delete", tags=["users"])
+async def delete_user(user: schemas.User = fastapi.Depends(crud.delete_current_user)):
+    return user
 
 
 # API items (articles)
