@@ -30,6 +30,11 @@ class _UserBase(_pydantic.BaseModel):
     pseudo: str
     avatar: str
     roles: str
+    adresse: str
+    complement: str
+    codepostal: int
+    region: str
+    numerorue: int
 
 
 class UserCreate(_UserBase):
