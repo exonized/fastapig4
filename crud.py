@@ -22,6 +22,28 @@ def get_db():
         db.close()
 
 
+async def get_user_by_email(email: str, db: _orm.Session):
+    return db.query(models.User).filter(models.User.email == email).first()
+
+
+async def create_token(user: models.User):
+    user_obj = schemas.User.from_orm(user)
+
+    token = jwtt.encode(user_obj.dict(), JWT_SECRET)
+
+    return dict(access_token=token, token_type="bearer", roles=user.roles, email=user.email)
+
+
+async def create_user(user: schemas.UserCreate, db: _orm.Session):
+    user_obj = models.User(
+        email=user.email, hashed_password=_hash.bcrypt.hash(user.hashed_password), pseudo=user.pseudo
+    )
+    db.add(user_obj)
+    db.commit()
+    db.refresh(user_obj)
+    return user_obj
+
+
 async def get_current_user(
     db: _orm.Session = fastapi.Depends(get_db),
     token: str = fastapi.Depends(oauth2schema),

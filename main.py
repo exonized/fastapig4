@@ -46,6 +46,20 @@ def get_db():
 
 # Users
 
+@app.post("/api/users", tags=["users"])
+async def create_user(
+    user: schemas.UserCreate, db: _orm.Session = fastapi.Depends(crud.get_db)
+):
+    db_user = await crud.get_user_by_email(user.email, db)
+    if db_user:
+        raise fastapi.HTTPException(
+            status_code=400, detail="Votre email est déjà utilisé")
+
+    user = await crud.create_user(user, db)
+
+    return await crud.create_token(user)
+
+
 @app.get("/api/users/me", tags=["users"], response_model=schemas.User)
 async def get_user(user: schemas.User = fastapi.Depends(crud.get_current_user)):
     return user
