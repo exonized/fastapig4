@@ -13,7 +13,7 @@ class User(Base):
     avatar = Column(String, default=('Avatar/base.png'))
     hashed_password = Column(String)
     adresse = Column(String)
-    completement = Column(String)
+    complement = Column(String)
     codepostal = Column(Integer)
     region = Column(String)
     numerorue = Column(Integer)
