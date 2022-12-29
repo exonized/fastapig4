@@ -60,6 +60,20 @@ async def create_user(
     return await crud.create_token(user)
 
 
+@app.post("/api/token", tags=["users"])
+async def generate_token(
+    form_data: _security.OAuth2PasswordRequestForm = fastapi.Depends(),
+    db: _orm.Session = fastapi.Depends(crud.get_db),
+):
+    user = await crud.authenticate_user(form_data.username, form_data.password, db)
+
+    if not user:
+        raise fastapi.HTTPException(
+            status_code=401, detail="Utilisateur non enregistré")
+
+    return await crud.create_token(user)
+
+
 @app.get("/api/users/me", tags=["users"], response_model=schemas.User)
 async def get_user(user: schemas.User = fastapi.Depends(crud.get_current_user)):
     return user

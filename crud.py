@@ -44,6 +44,18 @@ async def create_user(user: schemas.UserCreate, db: _orm.Session):
     return user_obj
 
 
+async def authenticate_user(email: str, password: str, db: _orm.Session):
+    user = await get_user_by_email(db=db, email=email)
+
+    if not user:
+        return False
+
+    if not user.verify_password(password):
+        return False
+
+    return user
+
+
 async def get_current_user(
     db: _orm.Session = fastapi.Depends(get_db),
     token: str = fastapi.Depends(oauth2schema),
