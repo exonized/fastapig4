@@ -28,8 +28,6 @@ class Item(ItemBase):
 class _UserBase(_pydantic.BaseModel):
     email: str
     pseudo: str
-    avatar: str
-    roles: str
     adresse: str
     complement: str
     codepostal: int
@@ -46,6 +44,8 @@ class UserCreate(_UserBase):
 
 class User(_UserBase):
     id: int
+    roles: str
+    avatar: str
 
     class Config:
         orm_mode = True
