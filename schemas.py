@@ -27,7 +27,6 @@ class Item(ItemBase):
 
 class _UserBase(_pydantic.BaseModel):
     email: str
-    pseudo: str
     adresse: str
     complement: str
     codepostal: int

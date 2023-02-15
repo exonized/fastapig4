@@ -101,7 +101,13 @@ def create_user_item(item: schemas.ItemCreate, db:  _orm.Session):
     return db_item
 
 
-def contact_create(contact: schemas.ContactCreate, db: _orm.Session):
+def contact_create(contact: schemas.ContactCreate,
+                   db: _orm.Session,
+                   token: str = fastapi.Depends(oauth2schema),
+                   ):
+
+    payload = jwtt.decode(token, JWT_SECRET, algorithms=["HS256"])
+    user = db.query(models.User).get(payload["id"])
     db_contact = models.Contact(**contact.dict())
     db.add(db_contact)
     db.commit()
